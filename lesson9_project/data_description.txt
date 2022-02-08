@@ -1,0 +1,1 @@
+За основу беру DataSet MAGIC Gamma Telescope Data Set https://archive.ics.uci.edu/ml/datasets/MAGIC+Gamma+Telescope
