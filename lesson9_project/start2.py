@@ -1,7 +1,7 @@
 import flask # add to requirments
 import pandas as pd # add to requirments
 import numpy as np
-from catboost import CatBoostClassifier # add to requirments
+import xgboost as xgb # add to requirments
 from sklearn.preprocessing import PolynomialFeatures # add to requirments
 from sklearn.preprocessing import StandardScaler
 from io import StringIO
@@ -9,8 +9,8 @@ import pickle
 
 # Загружаем модель и скалер
 pt = pickle.load(open('pt_scaler.pkl','rb'))
-cat_model = CatBoostClassifier(verbose=False)
-cat_model.load_model("cat_model")
+bst = xgb.XGBClassifier()
+bst.load_model('xgb_model')
 
 # Иницируем flask
 print(flask.__version__)
@@ -47,7 +47,7 @@ def calc_res(data):
     df_scaled = pd.DataFrame(pt.transform(df))
     df_scaled.columns = df.columns
     # Предсказываем
-    preds_class = cat_model.predict(df_scaled)
+    preds_class = bst.predict(df_scaled)
     res = '0'
     if preds_class[0] == 1:
         res = 'gamma (signal)'
